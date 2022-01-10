@@ -41,7 +41,7 @@ ENV PATH=/usr/lib/llvm-6.0/bin:$PATH
 WORKDIR /opt
 RUN git clone -b 2.1.1 --depth 1 https://github.com/stp/stp.git
 WORKDIR /opt/stp/build
-RUN cmake -DBUILD_SHARED_LIBS:BOOL=OFF -DENABLE_PYTHON_INTERFACE:BOOL=OFF .. && \
+RUN cmake -DBUILD-SHARED_LIBS:BOOL=OFF -DENABLE_PYTHON_INTERFACE:BOOL=OFF .. && \
     make && \
     make install
 WORKDIR /opt
@@ -87,7 +87,7 @@ RUN mkdir -p /workspaces && chmod 777 /workspaces
 # Build benchmarks
 USER symtuner
 WORKDIR /workspaces
-COPY artifact/make_paper_benchmark.sh /workspaces/make.sh
+COPY artifact/make-paper-benchmark.sh /workspaces/make.sh
 RUN ./make.sh all && rm /workspaces/make.sh
 
 # Libraries for artifact
