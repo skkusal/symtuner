@@ -84,18 +84,16 @@ RUN pip3 install /opt/symtuner && symtuner --help
 # Workspace setting
 RUN mkdir -p /workspaces && chmod 777 /workspaces
 
-# Build benchmarks
+# Artifact
 USER symtuner
 WORKDIR /workspaces
-COPY artifact/make-paper-benchmark.sh /workspaces/make.sh
-RUN ./make.sh all && rm /workspaces/make.sh
-
-# Libraries for artifact
 RUN pip3 install --no-cache-dir --upgrade pip && \
     pip3 install --no-cache-dir \
         matplotlib \
         pandas \
         tabulate
+COPY artifact/make-paper-benchmark.sh artifact/*.json artifact/README.md artifact/report.py /workspaces/
+RUN ./make-paper-benchmark.sh all
 
 # Entry point
 CMD [ "bash" ]
