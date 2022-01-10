@@ -24,7 +24,7 @@ $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
 combine-0.4.0   diffutils-3.7   gawk-5.1.0  grep-3.4    sed-4.8         xorriso-1.5.2
 coreutils-8.32  enscrip-1.6.6   gcal-4.1    nano-4.9    trueprint-5.4
 ```
-All benchmarks are compiled and can be directly tested. For example you can test gcal-4.1 with the following command:
+All benchmarks are compiled and can be directly tested. For example, you can test gcal-4.1 with the following command:
 ```bash
 /workspaces$ symtuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
 ```
