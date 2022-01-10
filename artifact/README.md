@@ -6,7 +6,7 @@ All experiments are tested with Ubuntu 18.04 LTS.
 You can see and coverage graph and bug report of testing gcal-4.1 with following commands:
 ```bash
 # you need some requirements; see Benchmarks/Requirements section
-$ ./make_paper_benchmark.sh gcal-4.1
+$ ./make-paper-benchmark.sh gcal-4.1
 $ symtuner --output-dir SymTuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
 $ symtuner --search-space hand-crafted-parameters.json --output-dir Default_Short gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
 # you need matplotlib, pandas, and tabulate to run report.py; see Visualize section
@@ -38,27 +38,27 @@ $ sudo apt-get install -y --no-install-recommends build-essential clang-6.0 curl
 $ sudo pip3 install --no-cache-dir wllvm
 # You need to set PATH to clang and llvm binarys
 $ export PATH=/usr/lib/llvm-6.0/bin:$PATH
-# Now you can use ./make_paper_benchmark.sh
-$ ./make_paper_benchmark.sh ...
+# Now you can use ./make-paper-benchmark.sh
+$ ./make-paper-benchmark.sh ...
 ```
 
 ### Benchmark Build
-The provided script (`make_paper_benchmark.sh`) will help you download and build the benchmarks.
+The provided script (`make-paper-benchmark.sh`) will help you download and build the benchmarks.
 For example, if you want to build `combine-0.4.0` and `gcal-4.1` use the following command:
 ```bash
-$ ./make_paper_benchmark.sh combine-0.4.0 gcal-4.1
+$ ./make-paper-benchmark.sh combine-0.4.0 gcal-4.1
 ```
 The script offers `all` options to build all 12 benchmarks.
 
 If you want to run testing for a single benchmark in parallel, you need to make multiple objects.
 For example, the following command will make 3 objects for `combine-0.4.0` and `gcal-4.1`:
 ```bash
-$ ./make_paper_benchmark.sh --n-objs 3 combine-0.4.0 gcal-4.1
+$ ./make-paper-benchmark.sh --n-objs 3 combine-0.4.0 gcal-4.1
 ```
 
 If you need further infomation use `--help` option:
 ```bash
-$ ./make_paper_benchmark.sh --help
+$ ./make-paper-benchmark.sh --help
 ```
 
 ### Your Own Benchmark
@@ -69,7 +69,7 @@ This section assume that SymTuner is installed.
 If you have not installed yet, please follow the instructions at [here](https://github.com/skkusal/symtuner).
 You can test the gcal with default settings with the following commands:
 ```bash
-$ ./make_paper_benchmarks gcal-4.1  # build gcal-4.1
+$ ./make-paper-benchmarks gcal-4.1  # build gcal-4.1
 $ symtuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
 ```
 All benchmarks can be run with default settings, except for whom that mentioned in [Notes](#Notes).
@@ -79,10 +79,10 @@ There are some benchmarks that needs more options.
 
 #### Test One Program In Parallel
 To test one program in parellel, you need to use different objects for each process.
-`make_paper_benchmark.sh` offers `--n-objs` options to create multiple objects at once.
+`make-paper-benchmark.sh` offers `--n-objs` options to create multiple objects at once.
 For example, if you want to test gcal-4.1 with 2 different settings, you may use the following commands:
 ```bash
-$ ./make_paper_benchmark.sh --n-objs 2 gcal-4.1
+$ ./make-paper-benchmark.sh --n-objs 2 gcal-4.1
 # your first setting
 $ symtuner --output-dir symtuner-out gcal-4.1/obj-llvm1/src/gcal.bc gcal-4.1/obj-gcov1/src/gcal
 # your second setting
