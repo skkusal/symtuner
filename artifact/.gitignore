@@ -1,0 +1,6 @@
+*
+!.gitignore
+!make-paper-benchmark.sh
+!README.md
+!*.json
+!*.py
