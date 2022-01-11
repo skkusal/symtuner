@@ -16,7 +16,7 @@ def plot_graph(benchmarks, title='Benchmark', path='graph.png'):
         benchmark_name = benchmark.name
         coverage_csv = benchmark / 'coverage.csv'
         time, coverage = [], []
-        with coverage_csv.open() as f:
+        with coverage_csv.open(encoding='UTF-8') as f:
             for line in f:
                 t, c = line.split(',')
                 time.append(int(t))
