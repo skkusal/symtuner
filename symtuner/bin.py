@@ -63,7 +63,7 @@ def main(argv=None):
                                  help='exploring rounds in start (default=20)')
 
     # Others
-    parser.add_argument('--output-dir', default='symtuner-out', type=str,
+    parser.add_argument('-d', '--output-dir', default='symtuner-out', type=str,
                         help='directory for generated files (default=symtuner-out)')
     parser.add_argument('--generate-search-space-json', action='store_true',
                         help='make example json file defining parameter search space')
