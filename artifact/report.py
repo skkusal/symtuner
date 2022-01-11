@@ -1,5 +1,4 @@
 from argparse import ArgumentParser
-from collections import defaultdict
 from pathlib import Path
 import matplotlib.pyplot as plt
 import pandas as pd
@@ -35,9 +34,10 @@ def plot_graph(benchmarks, title='Benchmark', path='graph.png'):
 
 def make_table(benchmarks, name='Benchmark', path='table.md'):
     path = Path(path)
-    bugs_per_benchmark = defaultdict(dict)
+    bugs_per_benchmark = {}
     for benchmark in benchmarks:
         benchmark = Path(benchmark)
+        bugs_per_benchmark[benchmark.name] = {}
         found_bugs_txt = benchmark / 'found_bugs.txt'
         with found_bugs_txt.open(encoding='UTF-8') as f:
             for line in f:
@@ -46,9 +46,10 @@ def make_table(benchmarks, name='Benchmark', path='table.md'):
                 bugs_per_benchmark[benchmark.name][bug] = 'V'
     df = pd.DataFrame(bugs_per_benchmark)
     df = df.fillna('X')
+    alignment = ('right', *['center' for _ in range(len(benchmarks))])
     with path.open('w', encoding='UTF-8') as f:
         f.write(f'# Bug Table for {name}\n')
-        f.write(df.to_markdown(colalign=('right', 'center', 'center')))
+        f.write(df.to_markdown(colalign=alignment))
         f.write('\n')
     print(f'See "{str(path)}" to find the bug table.')
 
