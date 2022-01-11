@@ -13,6 +13,7 @@ RUN apt-get update && \
         file \
         flex \
         git \
+        language-pack-en \
         libboost-all-dev \
         libcap-dev \
         libgoogle-perftools-dev \
@@ -21,6 +22,7 @@ RUN apt-get update && \
         llvm-6.0 \
         llvm-6.0-dev \
         llvm-6.0-tools \
+        locales \
         minisat2 \
         perl \
         python \
@@ -35,6 +37,10 @@ RUN apt-get update && \
         zlib1g-dev && \
     apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/*
 RUN pip3 install --no-cache-dir wllvm
+RUN locale-gen en_US.UTF-8
+ENV LANG=en_US.UTF-8
+ENV LANGUAGE=en_US.UTF-8
+ENV LC_ALL=en_US.UTF-8
 
 # Install klee
 ENV PATH=/usr/lib/llvm-6.0/bin:$PATH

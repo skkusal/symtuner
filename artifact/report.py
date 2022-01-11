@@ -39,14 +39,14 @@ def make_table(benchmarks, name='Benchmark', path='table.md'):
     for benchmark in benchmarks:
         benchmark = Path(benchmark)
         found_bugs_txt = benchmark / 'found_bugs.txt'
-        with found_bugs_txt.open() as f:
+        with found_bugs_txt.open(encoding='UTF-8') as f:
             for line in f:
                 _, tc, _, *bug = line.split()
                 bug = ' '.join(bug)
                 bugs_per_benchmark[benchmark.name][bug] = 'V'
     df = pd.DataFrame(bugs_per_benchmark)
     df = df.fillna('X')
-    with path.open('w') as f:
+    with path.open('w', encoding='UTF-8') as f:
         f.write(f'# Bug Table for {name}\n')
         f.write(df.to_markdown(colalign=('right', 'center', 'center')))
         f.write('\n')

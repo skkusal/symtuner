@@ -95,7 +95,7 @@ class GCov:
         # Get covered branches.
         covered = set()
         for gcov in gcovs:
-            with gcov.open(errors='replace') as f:
+            with gcov.open(encoding='UTF-8', errors='replace') as f:
                 file_name = f.readline().strip().split(':')[-1]
                 for i, line in enumerate(f):
                     if ('branch' in line) and ('never' not in line) and ('taken 0%' not in line):
@@ -242,14 +242,16 @@ class KLEE(SymbolicExecutor):
                 log_file = output_dir / 'symtuner.log'
                 get_logger().warning(f'Fail({e.returncode})ed to execute KLEE. '
                                      f'See for more details: {log_file}')
-                with log_file.open('w') as f:
+                with log_file.open('w', encoding='UTF-8') as f:
                     f.write(f'command: {cmd}\n')
                     f.write(f'return code: {e.returncode}\n')
                     f.write('\n')
                     f.write('-- stdout --\n')
-                    f.write(f'{e.stdout.decode(errors="replace")}\n')
+                    stdout = e.stdout.decode(errors='replace')
+                    f.write(f'{stdout}\n')
                     f.write('-- stderr --\n')
-                    f.write(f'{e.stderr.decode(errors="replace")}\n')
+                    stderr = e.stderr.decode(errors='replace')
+                    f.write(f'{stderr}\n')
 
         # Get testcases
         testcases = list(output_dir.glob('*.ktest'))
@@ -357,7 +359,7 @@ class KLEEReplay:
                     errs = list(testcase.parent.glob(testcase.stem + '.*.err'))
 
                     for err in errs:
-                        with err.open() as f:
+                        with err.open(encoding='UTF-8', errors='replace') as f:
                             lines = f.readlines()
                             file_name = lines[1].split()[1]
                             line_num = lines[2].split()[1]
