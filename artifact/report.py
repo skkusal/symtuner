@@ -41,7 +41,7 @@ def make_table(benchmarks, name='Benchmark', path='table.md'):
         found_bugs_txt = benchmark / 'found_bugs.txt'
         with found_bugs_txt.open(encoding='UTF-8') as f:
             for line in f:
-                _, tc, _, *bug = line.split()
+                _, _, _, *bug = line.split()
                 bug = ' '.join(bug)
                 bugs_per_benchmark[benchmark.name][bug] = 'V'
     df = pd.DataFrame(bugs_per_benchmark)
