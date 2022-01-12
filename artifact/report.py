@@ -64,7 +64,7 @@ def make_table(benchmarks, name='Benchmark', path='table.md'):
             for benchmark, tc_per_bug in tc_of_bug_per_benchmark.items():
                 if len(tc_per_bug) == 0:
                     continue
-                f.write(f'## Bugs found by {benchmark}\n')
+                f.write(f'## Bugs found by **{benchmark}**\n')
                 f.write('You can replay bugs with the following testcases:\n')
                 for bug, tc in tc_per_bug.items():
                     f.write(f'* {bug}: `{tc}`\n')
