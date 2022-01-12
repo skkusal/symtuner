@@ -35,22 +35,40 @@ def plot_graph(benchmarks, title='Benchmark', path='graph.png'):
 def make_table(benchmarks, name='Benchmark', path='table.md'):
     path = Path(path)
     bugs_per_benchmark = {}
+    tc_of_bug_per_benchmark = {}
     for benchmark in benchmarks:
         benchmark = Path(benchmark)
         bugs_per_benchmark[benchmark.name] = {}
+        tc_of_bug_per_benchmark[benchmark.name] = {}
         found_bugs_txt = benchmark / 'found_bugs.txt'
         with found_bugs_txt.open(encoding='UTF-8') as f:
             for line in f:
-                _, _, _, *bug = line.split()
+                if len(line) == 0:
+                    continue
+                _, tc, _, *bug = line.split()
                 bug = ' '.join(bug)
                 bugs_per_benchmark[benchmark.name][bug] = 'V'
+                tc_of_bug_per_benchmark[benchmark.name][bug] = tc
     df = pd.DataFrame(bugs_per_benchmark)
-    df = df.fillna('X')
-    alignment = ('right', *['center' for _ in range(len(benchmarks))])
-    with path.open('w', encoding='UTF-8') as f:
-        f.write(f'# Bug Table for {name}\n')
-        f.write(df.to_markdown(colalign=alignment))
-        f.write('\n')
+    if df.empty:
+        with path.open('w', encoding='UTF-8') as f:
+            f.write(f'# Bug Table for {name}\n')
+            f.write('No bugs found.\n')
+    else:
+        df = df.fillna('X')
+        alignment = ('right', *['center' for _ in range(len(benchmarks))])
+        with path.open('w', encoding='UTF-8') as f:
+            f.write(f'# Bug Table for {name}\n')
+            f.write(df.to_markdown(colalign=alignment))
+            f.write('\n\n')
+            for benchmark, tc_per_bug in tc_of_bug_per_benchmark.items():
+                if len(tc_per_bug) == 0:
+                    continue
+                f.write(f'## Bugs found by {benchmark}\n')
+                f.write('You can replay bugs with the following testcases:\n')
+                for bug, tc in tc_per_bug.items():
+                    f.write(f'* {bug}: `{tc}`\n')
+                f.write('\n\n')
     print(f'See "{str(path)}" to find the bug table.')
 
 
