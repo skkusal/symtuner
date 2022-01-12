@@ -98,7 +98,7 @@ RUN pip3 install --no-cache-dir --upgrade pip && \
         matplotlib \
         pandas \
         tabulate
-COPY artifact/make-paper-benchmark.sh artifact/*.json artifact/README.md artifact/report.py /workspaces/
+COPY --chown=symtuner:symtuner artifact/make-paper-benchmark.sh artifact/*.json artifact/README.md artifact/report.py /workspaces/
 RUN ./make-paper-benchmark.sh all
 
 # Entry point
