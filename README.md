@@ -13,9 +13,6 @@ $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
 Since KLEE, the symbolic executor, needs a big stack size,
 we set an unlimited stack size by `--ulimit='stack=-1:-1'`.
 
-### Local Installation
-If you want to **build your own environment**, you can install SymTuner with your machine directly. Please read [Install.md](./Install.md)
-
 ## Artifact
 We design a shorter experiment that performs **KLEE+SymTuner** and **KLEE with default parameters**, respectively, on a benchmark program **gcal-4.1** for an hour once. This is because to reproduce all the experimental results for our benchmarks in Figure 3 of our paper with a single core, it takes a total of 1,920 hours (12 benchmarks * 10 hours * 4 baselines * 4 iterations). In this section, we will show the commands to run the short experiment. 
 
