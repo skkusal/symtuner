@@ -1,59 +1,87 @@
 # SymTuner
-[SymTuner](https://conf.researchr.org/details/icse-2022/icse-2022-papers/147/SymTuner-Maximizing-the-Power-of-Symbolic-Execution-by-Adaptively-Tuning-External-Pa) is an online parameter tuning tool for symbolic executors which is publised at [ICSE'22](https://conf.researchr.org/home/icse-2022).
-Currently, SymTuner is developed based on [KLEE](https://klee.github.io).
+[SymTuner](https://conf.researchr.org/details/icse-2022/icse-2022-papers/147/SymTuner-Maximizing-the-Power-of-Symbolic-Execution-by-Adaptively-Tuning-External-Pa) is a tool that automatically **tunes external parameters of symbolic execution** via online learning. This tool is implemented on the top of [KLEE](https://klee.github.io), a publicly available symbolic execution tool for testing C programs. For more technical details, please read our paper which will be published at [ICSE'22](https://conf.researchr.org/home/icse-2022).
 
-## Docker
-We offer a [docker](https://www.docker.com) image that all requirements are pre-installed at [skkusal/symtuner](https://hub.docker.com/repository/docker/skkusal/symtuner).
-You can download and use it if you installed docker in your machine:
+## Installation
+### Docker Image
+We provide a [docker](https://www.docker.com) image that all requirements are pre-installed at [skkusal/symtuner](https://hub.docker.com/repository/docker/skkusal/symtuner).
+We suppose that you have already installed [docker](https://docs.docker.com/engine/install) in your machine.
+Then, you can simply download and use our tool as the following commands:
 ```bash
 $ docker pull skkusal/symtuner
-```
-To run a container use the following command.
-Note that, since KLEE which is a testing tool called by SymTuner internally needs a big stack size,
-you may need to set an unlimited stack size by `--ulimit='stack=-1:-1'` to avoid stack overflow issues inside a container:
-```bash
 $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
 ```
-If you have not installed docker yet, you may see [here](https://docs.docker.com/engine/install), or follow instructions in the next section to install SymTuner directly.
+Since KLEE, the symbolic executor, needs a big stack size,
+we set an unlimited stack size by `--ulimit='stack=-1:-1'`.
+
+### Local Installation
+If you want to **build your own environment**, you can install SymTuner with your machine directly. Please read [Install.md](./Install.md)
+
+## Artifact
+We design a shorter experiment that performs **KLEE+SymTuner** and **KLEE with default parameters**, respectively, on a benchmark program **gcal-4.1** for an hour once. This is because to reproduce all the experimental results for our benchmarks in Figure 3 of our paper with a single core, it takes a total of 1,920 hours (12 benchmarks * 10 hours * 4 baselines * 4 iterations). In this section, we will show the commands to run the short experiment. 
 
 ### Benchmarks
-Inside the container, we offer benchmarks in `/workspaces` directory:
+We offer all the benchmarks used for our experiments in `/workspaces` directory:
 ```bash
 $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
 /workspaces$ ls
 combine-0.4.0   diffutils-3.7   gawk-5.1.0  grep-3.4    sed-4.8         xorriso-1.5.2
 coreutils-8.32  enscrip-1.6.6   gcal-4.1    nano-4.9    trueprint-5.4
 ```
-All benchmarks are compiled and can be directly tested. For example, you can test gcal-4.1 with the following command:
+All benchmarks have already been compiled, so these can be tested via SymTuner directly. 
+
+### Running KLEE with SymTuner.
+You can perform **KLEE+SymTuner** on the program **gcal-4.1** with the following command:
 ```bash
-/workspaces$ symtuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
+/workspaces$ symtuner -t 3600 -s p_spaces.json --dir KLEE_SymTuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal 
 ```
-You can see the detailed instructions about testing the provided benchmarks in [artifact](./artifact).
-
-## Local Installation
-If you want to build your own environment, you can install SymTuner with your machine directly.
-
-### Requirements
-SymTuner is tested with the following dependencies with Ubuntu 18.04 LTS.
-* KLEE 2.0
-* GCov 7.5.0
-* Python 3.6
-
-You can install KLEE 2.0 by following instructions at [here](https://klee.github.io/releases/docs/v2.0/build-llvm60/).
-Ohter dependencies can be installed with the following commands:
+Then, you will see the testing progress as follows:
 ```bash
-$ sudo apt-get update
-$ sudo apt-get install gcc python3 python3-pip
+...
+2022-01-10 14:08:26 symtuner [INFO] All configuration loaded. Start testing.
+2022-01-10 14:09:03 symtuner [INFO] Iteration: 1 Time budget: 30 Time elapsed: 36 Coverage: 1125 Bugs: 0
+2022-01-10 14:09:40 symtuner [INFO] Iteration: 2 Time budget: 30 Time elapsed: 73 Coverage: 1144 Bugs: 0
+2022-01-10 14:10:17 symtuner [INFO] Iteration: 3 Time budget: 30 Time elapsed: 111 Coverage: 1395 Bugs: 0
+...
+
+```
+When SymTuner successfully terminates, you can see the following output:
+```bash
+...
+2022-01-10 15:08:55 symtuner [INFO] SymTuner done. Achieve 2756 coverage and found 1 bug.
 ```
 
-### Installation
-You can easily install SymTuner with `pip`:
+### Running KLEE with default parameters.
+You can also perform **KLEE** with the default parameter values as the following command:
 ```bash
-$ sudo pip3 install git+https://github.com/skkusal/symtuner.git@v0.1.0
+/workspaces$ symtuner -t 3600 -s default.json --dir defaultKLEE gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
+```
+Then, you will see the process similar to the above testing process of symtuner.
+
+### Visualizing the experimental results.
+`report.py` is a visualization script that generate a coverage graph over time and a table of found bugs.
+This script needs some requirments, and you can install the requirements with the followng command:
+```bash
+$ sudo pip3 install matplotlib pandas tabulate
+```
+The script takes the directories generated by running **KLEE+SymTuner** and **KLEE with default parameters**, repectively, and compares the experimental results as:
+```bash
+$ python3 report.py KLEE_SymTuner defaultKLEE
+```
+
+Then, you can see the coverage graph of with the above experimental results at `coverage.pdf`:
+![gcal-coverage-image](./image/gcal_coverage.png)
+
+You also can see the found bug table at `bugs.md`:
+```
+/workspaces$ cat bugs.md
+# Bug Table for gcal-4.1
+|                              |  KLEE_SymTuner  |  defaultKLEE  |
+|-----------------------------:|:---------------:|:-------------:|
+|      ../../src/file-io.c 740 |        V        |       X       |
 ```
 
 ## Usage
-You can see a usage message of SymTuner with the following command:
+You can check the options of SymTuner with the following command:
 ```
 $ symtuner -h
 usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
@@ -65,22 +93,22 @@ usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
                 [llvm_bc] [gcov_obj]
 ...
 ```
-Important options you may interested in will be explained.
-All options can be found with `--help` option.
 
-### Target
-Options to set the target program to test. These options are **required**.
-SymTuner needs 2 different objects; first is object complied with LLVM, and second is object with GCov support.
+### Two required options
+**Two options** are required to run SymTuner; 
+the first one is about an LLVM bitcode file to run KLEE, and the second one is about an executable file with Gcov instrumentation to calculate coverage.
 | Option | Description |
 |:------:|:------------|
-| `llvm_bc` | Object that compiled with LLVM |
-| `gcov_obj` | Object that compiled with GCov support |
+| `llvm_bc` | LLVM bitcode file |
+| `gcov_obj` | executable with Gcov support |
 
-Besides, you may carefully pass the depth of parent directory to collect auxilary files for GCov.
+<!--
+Besides, you may carefully pass the depth of parent directory to collect auxilary files for Gcov.
 You can set the level as the depth to the root of the target object.
 | Option | Description |
 |:------:|:------------|
 | `--gcov-depth` | The parent depth to find gcov auxilary files, such as `*.gcda` and `*.gcov` files |
+-->
 
 ### Hyperparameters
 Here are some important hyperparameters. You may see all the hyperparameters by passing `--help` option to SymTuner.
@@ -89,8 +117,8 @@ Here are some important hyperparameters. You may see all the hyperparameters by 
 | `--budget` | Total time budget |
 | `--search-space` | Path to json file that defines parameter spaces |
 
-If you do not specify search space, SymTuner will use the default search seaces.
-You can give your own search space that you are interested in with `--search-space` option.
+If you do not specify search space, SymTuner will use the parameter spaces predefined in our paper.
+You can give your own parameter space with `--search-space` option.
 `--generate-search-space-json` option will generate an example json that defines search spaces:
 ```bash
 $ symtuner --generate-search-space-json
@@ -98,7 +126,7 @@ $ symtuner --generate-search-space-json
 ```
 
 In the json file, there are two entries;
-`space` for paramters that SymTuner to tune, and `defaults` for parameters to use directly without tuning.
+`space` for paramters to be tuned by SymTuner, and `defaults` for parameters to use directly without tuning.
 ```
 {
     "space": {
@@ -112,26 +140,29 @@ In the json file, there are two entries;
     }
 }
 ```
-Each tuning space is defined by argument space (first argument, which is an inner list) and maximum repeatability of argument.
-
-#### KLEE based SymTuner
-For KLEE based SymTuner, `null` or `"on"` means turning on the parameter, and `"off"` means turning off the parameter.
-
-### KLEE and GCov
-SymTuner needs `klee`, `klee-replay`, and `gcov`.
-If you cannot find them in your `PATH`, you need to specify the executables to SymTuner.
-| Option | Description |
-|:------:|:------------|
-| `--klee` | Path to KLEE executable |
-| `--klee-replay` | Path to KLEE replay executable |
-| `--gcov` | Path to GCove executable |
-
-## Artifact
-We offer some instructuions to test some benchmarks at [artifact](./artifact).
+Each tuning space is defined by its candidate values, and the maximum number of times to be repeated.
 
 ## Contribution
 We are welcome any issues. Please, leave them in the [Issues](https://github.com/skkusal/symtuner/issues) tab.
+
+### Implement Your Own Idea
 If you want to make any contribution, SymTuner has [devcontainer](https://code.visualstudio.com/docs/remote/containers) settings with all requirements are pre-installed.
+You can set up the environment with a few steps as follows:
+1. Install [Visual Studio Code](https://code.visualstudio.com/).
+2. Install [Docker](https://www.docker.com/). You can find installation instructions for each platforms at [here](https://docs.docker.com/engine/install/).
+3. Install [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers) extention. Open extension bar (`CTRL + Shift + X` or `CMD + Shift + X`), search `Remote - Containers`, and install it.
+4. Clone this repository (or a forked repository), and open it with VSCode.
+```bash
+$ git clone https://github.com/skkusal/symtuner.sal # or clone a forked repository
+$ code symtuner
+```
+5. Press `F1`, and run `Reopen In Container`.
+6. Now, you can implement and test your own idea!
+7. (Optional) Install SymTuner in editable mode to test your idea simultaneously with the VSCode terminal (<code>CTRL + &#96;</code>).
+```bash
+# Note that this command should be typed in the terminal inside VSCode, not your own terminal application
+/workspaces/symtuner$ [sudo] pip3 install -e .
+```
 
 ## Citation
 You can cite our paper, if you used our work with your own work.
