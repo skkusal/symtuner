@@ -5,7 +5,7 @@
 ### Docker Image
 We provide a [docker](https://www.docker.com) image that all requirements are pre-installed at [skkusal/symtuner](https://hub.docker.com/repository/docker/skkusal/symtuner).
 We suppose that you have already installed [docker](https://docs.docker.com/engine/install) in your machine.
-Then, you can simply download and use our tool as the following commands:
+Then, you can simply download and start our tool as the following commands:
 ```bash
 $ docker pull skkusal/symtuner
 $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
