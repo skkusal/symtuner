@@ -1,0 +1,23 @@
+{
+    "space": {},
+    "defaults": {
+        "-output-module": "false",
+        "-output-source": "false",
+        "-output-stats": "false",
+        "-use-batching-search": null,
+        "-posix-runtime": null,
+        "-only-output-states-covering-new": null,
+        "-watchdog": null,
+        "-seed-file": "random_from_all",
+        "-allow-seed-extension": null,
+        "-allow-seed-truncation": null,
+        "-ignore-solver-failures": null,
+        "-libc": "uclibc",
+        "-disable-inlining": null,
+        "-sym-args 0 1": 10,
+        "-sym-args 0 2": 2,
+        "-sym-files 1": 8,
+        "-sym-stdin": 8,
+        "-sym-stdout": null
+    }
+}
