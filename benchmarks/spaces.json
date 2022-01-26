@@ -1,0 +1,38 @@
+{
+    "space": {
+        "-simplify-sym-indices": [["true", "false"], 1],
+        "-use-forked-solver": [["true", "false"], 1],
+        "-use-cex-cache": [["true", "false"], 1],
+        "-max-memory-inhibit": [["true", "false"], 1],
+        "-optimize": [["true", "false"], 1],
+        "-sym-stdout": [["on", "off"], 1],
+        "-max-memory": [[500, 1000, 1500, 2000, 2500], 1],
+        "-max-sym-array-size": [[3000, 3500, 4000, 4500, 5000], 1],
+        "-max-instruction-time": [[10, 20, 30, 40, 50], 1],
+        "-max-static-fork-pct": [[0.25, 0.5, 1, 2, 4], 1],
+        "-max-static-solve-pct": [[0.25, 0.5, 1, 2, 4], 1],
+        "-max-static-cpfork-pct": [[0.25, 0.5, 1, 2, 4], 1],
+        "-batch-instructions": [[6000, 8000, 10000, 12000, 14000], 1],
+        "-sym-arg": [[1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 5],
+        "-sym-files 1": [[4, 8, 12, 16, 20], 1],
+        "-sym-stdin": [[4, 8, 12, 16, 20], 1],
+        "-seed-file": [[], 1],
+        "-search": [["nurs:cpicnt", "nurs:qc", "nurs:covnew", "random-path", "bfs", "nurs:md2u", "nurs:icnt", "nurs:depth", "random-state", "dfs"], 1],
+        "-switch-type": [["simple", "internal"], 1],
+        "-external-calls": [["concrete", "all"], 1]
+    },
+    "defaults": {
+        "-output-module": "false",
+        "-output-source": "false",
+        "-output-stats": "false",
+        "-use-batching-search": null,
+        "-posix-runtime": null,
+        "-only-output-states-covering-new": null,
+        "-watchdog": null,
+        "-allow-seed-extension": null,
+        "-allow-seed-truncation": null,
+        "-ignore-solver-failures": null,
+        "-libc": "uclibc",
+        "-disable-inlining": null
+    }
+}

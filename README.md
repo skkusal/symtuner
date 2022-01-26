@@ -30,7 +30,7 @@ All benchmarks have already been compiled, so these can be tested via SymTuner d
 ### Running KLEE with SymTuner.
 You can perform **KLEE+SymTuner** on the program **gcal-4.1** with the following command:
 ```bash
-/workspaces$ symtuner -t 3600 -s p_spaces.json --dir KLEE_SymTuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal 
+/workspaces$ symtuner -t 3600 -s spaces.json --dir KLEE_SymTuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal 
 ```
 Then, you will see the testing progress as follows:
 ```bash
