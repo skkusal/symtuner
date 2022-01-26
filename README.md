@@ -144,7 +144,7 @@ Each tuning space is defined by its candidate values, and the maximum number of 
 We are welcome any issues. Please, leave them in the [Issues](https://github.com/skkusal/symtuner/issues) tab.
 
 ### Implement Your Own Idea
-If you want to make any contribution, SymTuner has [devcontainer](https://code.visualstudio.com/docs/remote/containers) settings with all requirements are pre-installed.
+If you want to make any contribution, plesase use the [devcontainer](https://code.visualstudio.com/docs/remote/containers) settings of SymTuner with all requirements pre-installed.
 You can set up the environment with a few steps as follows:
 1. Install [Visual Studio Code](https://code.visualstudio.com/).
 2. Install [Docker](https://www.docker.com/). You can find installation instructions for each platforms at [here](https://docs.docker.com/engine/install/).
