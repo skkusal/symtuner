@@ -64,14 +64,14 @@ $ symtuner --search-space no-optimize.json --gcov-depth 0 gawk-5.1.0/obj-llvm/ga
 
 ### How to Test without Parameter Tuning
 To test without tuning, you can give SymTuner an empty parameter space (which is defined with `"space"` key in a json file).
-`hand-crafted-parameters.json` gives some default parameters that can be used to test benchmarks without tuning:
+`no-tuning.json` gives some default parameters that can be used to test benchmarks without tuning:
 ```bash
-$ cat hand-crafted-parameters.json
+$ cat no-tuning.json
 {
     "space": {},
     "defaults": {
         "-output-module": "false",
 ...
 # run symtuner without parameter-tuning
-$ symtuner --search-space hand-crafted-parameters.json --output-dir default-out gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
+$ symtuner --search-space no-tuning.json --output-dir default-out gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
 ```

@@ -49,9 +49,9 @@ When SymTuner successfully terminates, you can see the following output:
 ```
 
 ### Running KLEE with default parameters.
-You can also perform **KLEE** with the default parameter values as the following command:
+You can also perform **KLEE** with the default parameter values without SymTuner as the following command:
 ```bash
-/workspaces$ symtuner -t 3600 -s default.json --dir defaultKLEE gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
+/workspaces$ symtuner -t 3600 -s no-tuning.json --dir defaultKLEE gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
 ```
 Then, you will see the process similar to the above testing process of symtuner.
 
