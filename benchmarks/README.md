@@ -49,17 +49,17 @@ Therefore, `-optimize` option needs to be removed to test the following benchmar
 * gawk-5.1.0
 * trueprint-5.4
 
-`space-without-optimize.json` is our default parameter space setting with `-optimize` option removed.
+`no-optimize.json` is our default parameter space setting with `-optimize` option removed.
 You can directly test those benchmarks with the modified space:
 ```bash
-$ symtuner --search-space space-without-optimize.json trueprint-5.4/obj-llvm/src/trueprint.bc trueprint-5.4/obj-gcov/src/trueprint
+$ symtuner --search-space no-optimize.json trueprint-5.4/obj-llvm/src/trueprint.bc trueprint-5.4/obj-gcov/src/trueprint
 ```
 
 #### Running SymTuner with GCov Depth Adjustment
 All executables in benchmarks provided, except for gawk-5.1.0, located in the 1 level depth of folder from the root.
 However, gawk-5.1.0 executable located in the root directory, so `--gcov-depth` should be set as 0:
 ```bash
-$ symtuner --search-space space-without-optimize.json --gcov-depth 0 gawk-5.1.0/obj-llvm/gawk.bc gawk-5.1.0/obj-gcov/gawk
+$ symtuner --search-space no-optimize.json --gcov-depth 0 gawk-5.1.0/obj-llvm/gawk.bc gawk-5.1.0/obj-gcov/gawk
 ```
 
 ### How to Test without Parameter Tuning
