@@ -13,9 +13,71 @@ $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
 Since KLEE, the symbolic executor, needs a big stack size,
 we recommend you to set an unlimited stack size by `--ulimit='stack=-1:-1'`.
 
+## Usage
+You can check the options of SymTuner with the following command:
+```
+$ symtuner -h
+usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
+                [-t INT] [--minimum-time-portion FLOAT] [--round INT]
+                [--increase-ratio FLOAT] [-s JSON] [--exploit-portion FLOAT]
+                [--k-seeds INT] [--warmup-rounds INT]
+                [--output-dir OUTPUT_DIR] [--generate-search-space-json]
+                [--debug] [--gcov-depth GCOV_DEPTH]
+                [llvm_bc] [gcov_obj]
+...
+```
+
+### Two mandatory options
+**Two options** are mandatory to run SymTuner; 
+the first one is an LLVM bitcode file to run KLEE, and the second one is an executable file with Gcov instrumentation to calculate coverage.
+| Option | Description |
+|:------:|:------------|
+| `llvm_bc` | LLVM bitcode file |
+| `gcov_obj` | executable with Gcov support |
+
+<!--
+Besides, you may carefully pass the depth of parent directory to collect auxilary files for Gcov.
+You can set the level as the depth to the root of the target object.
+| Option | Description |
+|:------:|:------------|
+| `--gcov-depth` | The parent depth to find gcov auxilary files, such as `*.gcda` and `*.gcov` files |
+-->
+
+### Hyperparameters
+Here are some important hyperparameters. You may see all hyperparameters by passing `--help` option to SymTuner.
+| Option | Description |
+|:------:|:------------|
+| `--budget` | Total time budget |
+| `--search-space` | Path to json file that defines parameter spaces |
+
+If you do not specify search space, SymTuner will use the parameter spaces predefined in our paper.
+You can give your own parameter space with `--search-space` option.
+`--generate-search-space-json` option will generate an example json that defines search spaces:
+```bash
+$ symtuner --generate-search-space-json
+# See example-space.json
+```
+
+In the json file, there are two entries;
+`space` for paramters to be tuned by SymTuner, and `defaults` for parameters to use directly without tuning.
+```
+{
+    "space": {
+        "-max-memory": [[500, 1000, 1500, 2000, 2500], 1],
+        "-sym-stdout": [["on", "off"], 1],
+        ...
+    },
+    "defaults": {
+        "-watchdog": null,
+        ...
+    }
+}
+```
+Each tuning space is defined by its candidate values, and the maximum number of times to be repeated.
+
 ## Artifact
-We design a shorter experiment that performs **KLEE+SymTuner** and **KLEE with default parameters**, respectively, on a benchmark program **gcal-4.1** for an hour once. This is because the experiments on all benchmarks (Figure 3 in our paper) takes a total of 1,920 hours (12 benchmarks * 10 hours * 4 baselines * 4 iterations). 
-In this section, we will show the commands to run the short experiment. 
+Here, we provide an instruction to conduct a short experiment that performs **KLEE+SymTuner** and **KLEE with default parameters**, respectively, on a benchmark program **gcal-4.1** once with a time budget of one hour. 
+Note that, conducting experiments on all benchmarks (Figure 3 in our paper) takes a total of 1,920 hours (12 benchmarks * 10 hours * 4 baselines * 4 iterations). 
 
 ### Benchmarks
 We offer all benchmarks used for our experiments in `/workspaces` directory:
@@ -77,68 +139,6 @@ You can also find the bug table at `bugs.md`:
 |-----------------------------:|:---------------:|:-------------:|
 |      ../../src/file-io.c 740 |        V        |       X       |
 ```
-
-## Usage
-You can check the options of SymTuner with the following command:
-```
-$ symtuner -h
-usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
-                [-t INT] [--minimum-time-portion FLOAT] [--round INT]
-                [--increase-ratio FLOAT] [-s JSON] [--exploit-portion FLOAT]
-                [--k-seeds INT] [--warmup-rounds INT]
-                [--output-dir OUTPUT_DIR] [--generate-search-space-json]
-                [--debug] [--gcov-depth GCOV_DEPTH]
-                [llvm_bc] [gcov_obj]
-...
-```
-
-### Two mandatory options
-**Two options** are mandatory to run SymTuner; 
-the first one is an LLVM bitcode file to run KLEE, and the second one is an executable file with Gcov instrumentation to calculate coverage.
-| Option | Description |
-|:------:|:------------|
-| `llvm_bc` | LLVM bitcode file |
-| `gcov_obj` | executable with Gcov support |
-
-<!--
-Besides, you may carefully pass the depth of parent directory to collect auxilary files for Gcov.
-You can set the level as the depth to the root of the target object.
-| Option | Description |
-|:------:|:------------|
-| `--gcov-depth` | The parent depth to find gcov auxilary files, such as `*.gcda` and `*.gcov` files |
--->
-
-### Hyperparameters
-Here are some important hyperparameters. You may see all the hyperparameters by passing `--help` option to SymTuner.
-| Option | Description |
-|:------:|:------------|
-| `--budget` | Total time budget |
-| `--search-space` | Path to json file that defines parameter spaces |
-
-If you do not specify search space, SymTuner will use the parameter spaces predefined in our paper.
-You can give your own parameter space with `--search-space` option.
-`--generate-search-space-json` option will generate an example json that defines search spaces:
-```bash
-$ symtuner --generate-search-space-json
-# See example-space.json
-```
-
-In the json file, there are two entries;
-`space` for paramters to be tuned by SymTuner, and `defaults` for parameters to use directly without tuning.
-```
-{
-    "space": {
-        "-max-memory": [[500, 1000, 1500, 2000, 2500], 1],
-        "-sym-stdout": [["on", "off"], 1],
-        ...
-    },
-    "defaults": {
-        "-watchdog": null,
-        ...
-    }
-}
-```
-Each tuning space is defined by its candidate values, and the maximum number of times to be repeated.
 
 ## Contribution
 We are welcome any issues. Please, leave them in the [Issues](https://github.com/skkusal/symtuner/issues) tab.
