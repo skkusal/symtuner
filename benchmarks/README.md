@@ -56,8 +56,8 @@ $ symtuner --search-space no-optimize.json trueprint-5.4/obj-llvm/src/trueprint.
 ```
 
 #### Running SymTuner with GCov Depth Adjustment
-All executables in benchmarks provided, except for gawk-5.1.0, located in the 1 level depth of folder from the root.
-However, gawk-5.1.0 executable located in the root directory, so `--gcov-depth` should be set as 0:
+All executable files in benchmarks, except for gawk-5.1.0, are located in the 1 level depth of folder from the root.
+An executable file for gawk-5.1.0 is located in the root directory, so `--gcov-depth` should be set as 0:
 ```bash
 $ symtuner --search-space no-optimize.json --gcov-depth 0 gawk-5.1.0/obj-llvm/gawk.bc gawk-5.1.0/obj-gcov/gawk
 ```
