@@ -50,7 +50,7 @@ Therefore, `-optimize` option needs to be removed to test the following benchmar
 * trueprint-5.4
 
 `no-optimize.json` is our default parameter space setting with `-optimize` option removed.
-You can directly test those benchmarks with the modified space:
+You can directly test those benchmarks with the modified search space:
 ```bash
 $ symtuner --search-space no-optimize.json trueprint-5.4/obj-llvm/src/trueprint.bc trueprint-5.4/obj-gcov/src/trueprint
 ```
