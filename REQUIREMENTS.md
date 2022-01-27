@@ -1,5 +1,5 @@
 # Requirement
-To run SymTuner, you need to install only [docker](https://www.docker.com) on your system.
+To run SymTuner, you only need to install [docker](https://www.docker.com) on your system.
 
 Because we provide a [docker](https://www.docker.com) image that all requirements are pre-installed at [skkusal/symtuner](https://hub.docker.com/repository/docker/skkusal/symtuner). 
 
