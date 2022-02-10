@@ -140,6 +140,190 @@ You can also find the bug table at `bugs.md`:
 |      ../../src/file-io.c 740 |        V        |       X       |
 ```
 
+### Commands for All Benchmarks
+Click to see commands for each benchmark:
+
+<details>
+<summary>combine-0.4.0</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d combine_SymTuner combine-0.4.0/obj-llvm/src/combine.bc combine-0.4.0/obj-gcov/src/combine 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d combine_defaultKLEE combine-0.4.0/obj-llvm/src/combine.bc combine-0.4.0/obj-gcov/src/combine
+# Visualize
+$ python3 report.py combine_SymTuner combine_defaultKLEE --name combine-0.4.0
+```
+
+</div>
+</details>
+<details>
+<summary>diff-3.7 (from diffutils-3.7)</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d diff_SymTuner diffutils-3.7/obj-llvm/src/diff.bc diffutils-3.7/obj-gcov/src/diff 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d diff_defaultKLEE diffutils-3.7/obj-llvm/src/diff.bc diffutils-3.7/obj-gcov/src/diff
+# Visualize
+$ python3 report.py diff_SymTuner diff_defaultKLEE --name diff-3.7
+```
+
+</div>
+</details>
+<details>
+<summary>du-8.32 (from coreutils-8.32)</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d du_SymTuner coreutils-8.32/obj-llvm/src/du.bc coreutils-8.32/obj-gcov/src/du 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d du_defaultKLEE coreutils-8.32/obj-llvm/src/du.bc coreutils-8.32/obj-gcov/src/du
+# Visualize
+$ python3 report.py du_SymTuner du_defaultKLEE --name du-8.32
+```
+
+</div>
+</details>
+<details>
+<summary>enscript-1.6.6</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d enscript_SymTuner enscript-1.6.6/obj-llvm/src/enscript.bc enscript-1.6.6/obj-gcov/src/enscript 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d enscript_defaultKLEE enscript-1.6.6/obj-llvm/src/enscript.bc enscript-1.6.6/obj-gcov/src/enscript
+# Visualize
+$ python3 report.py enscript_SymTuner enscript_defaultKLEE --name enscript-1.6.6
+```
+
+</div>
+</details>
+<details>
+<summary>gawk-5.1.0</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s no-optimize.json -d gawk_SymTuner --gcov-depth 0 gawk-5.1.0/obj-llvm/gawk.bc gawk-5.1.0/obj-gcov/gawk 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d gawk_defaultKLEE --gcov-depth 0 gawk-5.1.0/obj-llvm/gawk.bc gawk-5.1.0/obj-gcov/gawk
+# Visualize
+$ python3 report.py gawk_SymTuner gawk_defaultKLEE --name gawk-5.1.0
+```
+
+</div>
+</details>
+<details>
+<summary>gcal-4.1</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d gcal_SymTuner gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d gcal_defaultKLEE gcal-4.1/obj-llvm/src/gcal.bc gcal-4.1/obj-gcov/src/gcal
+# Visualize
+$ python3 report.py gcal_SymTuner gcal_defaultKLEE --name gcal-4.1
+```
+
+</div>
+</details>
+<details>
+<summary>grep-3.4</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d grep_SymTuner grep-3.4/obj-llvm/src/grep.bc grep-3.4/obj-gcov/src/grep 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d grep_defaultKLEE grep-3.4/obj-llvm/src/grep.bc grep-3.4/obj-gcov/src/grep
+# Visualize
+$ python3 report.py grep_SymTuner grep_defaultKLEE --name grep-3.4
+```
+
+</div>
+</details>
+<details>
+<summary>ls-8.32 (from coreutils-8.32)</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d ls_SymTuner coreutils-8.32/obj-llvm/src/ls.bc coreutils-8.32/obj-gcov/src/ls 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d ls_defaultKLEE coreutils-8.32/obj-llvm/src/ls.bc coreutils-8.32/obj-gcov/src/ls
+# Visualize
+$ python3 report.py ls_SymTuner ls_defaultKLEE --name ls-8.32
+```
+
+</div>
+</details>
+<details>
+<summary>nano-4.9</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d nano_SymTuner nano-4.9/obj-llvm/src/nano.bc nano-4.9/obj-gcov/src/nano 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d nano_defaultKLEE nano-4.9/obj-llvm/src/nano.bc nano-4.9/obj-gcov/src/nano
+# Visualize
+$ python3 report.py nano_SymTuner nano_defaultKLEE --name nano-4.9
+```
+
+</div>
+</details>
+<details>
+<summary>sed-4.8</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d sed_SymTuner sed-4.8/obj-llvm/src/sed.bc sed-4.8/obj-gcov/src/sed 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d sed_defaultKLEE sed-4.8/obj-llvm/src/sed.bc sed-4.8/obj-gcov/src/sed
+# Visualize
+$ python3 report.py sed_SymTuner sed_defaultKLEE --name sed-4.8
+```
+
+</div>
+</details>
+<details>
+<summary>trueprint-5.4</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s no-optimize.json -d trueprint_SymTuner trueprint-5.4/obj-llvm/src/trueprint.bc trueprint-5.4/obj-gcov/src/trueprint 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d trueprint_defaultKLEE trueprint-5.4/obj-llvm/src/trueprint.bc trueprint-5.4/obj-gcov/src/trueprint
+# Visualize
+$ python3 report.py trueprint_SymTuner trueprint_defaultKLEE --name trueprint-5.4
+```
+
+</div>
+</details>
+<details>
+<summary>xorriso-1.5.2</summary>
+<div markdown="1">
+
+```bash
+# Run SymTuner
+$ symtuner -t 3600 -s spaces.json -d xorriso_SymTuner xorriso-1.5.2/obj-llvm/src/xorriso.bc xorriso-1.5.2/obj-gcov/src/xorriso 
+# Run default KLEE
+$ symtuner -t 3600 -s no-tuning.json -d xorriso_defaultKLEE xorriso-1.5.2/obj-llvm/src/xorriso.bc xorriso-1.5.2/obj-gcov/src/xorriso
+# Visualize
+$ python3 report.py xorriso_SymTuner xorriso_defaultKLEE --name xorriso-1.5.2
+```
+
+</div>
+</details>
+
 ## Source Code Structure
 Here are breif descriptions of files. Some less-important files may omitted.
 ```
