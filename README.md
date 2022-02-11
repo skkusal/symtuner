@@ -268,17 +268,15 @@ You can check the options of SymTuner and see the meaning of each option with th
 ```
 $ symtuner -h
 usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
-                [-t INT] [--minimum-time-portion FLOAT] [--round INT]
-                [--increase-ratio FLOAT] [-s JSON] [--exploit-portion FLOAT]
-                [--k-seeds INT] [--warmup-rounds INT]
-                [--output-dir OUTPUT_DIR] [--generate-search-space-json]
-                [--debug] [--gcov-depth GCOV_DEPTH]
+                [-s JSON] [--exploit-portion FLOAT] [--step INT]
+                [--minimum-time-portion FLOAT] [--increase-ratio FLOAT]
+                [--minimum-time-budget INT] [--exploration-steps INT]
+                [-d OUTPUT_DIR] [--generate-search-space-json] [--debug]
+                [--gcov-depth GCOV_DEPTH] [-t INT]
                 [llvm_bc] [gcov_obj]
 
 optional arguments:
-  -h, --help            show this help message and exit
-  --output-dir OUTPUT_DIR
-                        directory for generated files (default=symtuner-out)                     
+  -h, --help            show this help message and exit                    
 ...
 ```
 
