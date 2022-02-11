@@ -279,13 +279,11 @@ usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
 You can also see the meaning of each option of SymTuner as:
 ```
 $ symtuner --help
-
+...
 optional arguments:
   -h, --help            show this help message and exit
   --output-dir OUTPUT_DIR
-                        directory for generated files (default=symtuner-out)
-  --generate-search-space-json
-                        make example json file defining parameter search space                        
+                        directory for generated files (default=symtuner-out)                     
 ...
 ```
 
