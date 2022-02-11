@@ -264,7 +264,7 @@ $ python3 report.py xorriso_SymTuner xorriso_defaultKLEE --name xorriso-1.5.2
 
 
 ## Usage
-You can check the options of SymTuner with the following command:
+You can check the options of SymTuner and see the meaning of each option with the following command:
 ```
 $ symtuner -h
 usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
@@ -274,11 +274,6 @@ usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
                 [--output-dir OUTPUT_DIR] [--generate-search-space-json]
                 [--debug] [--gcov-depth GCOV_DEPTH]
                 [llvm_bc] [gcov_obj]
-...
-```
-You can also see the meaning of each option of SymTuner as the following command:
-```
-$ symtuner --help
 
 optional arguments:
   -h, --help            show this help message and exit
