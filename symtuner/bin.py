@@ -55,10 +55,7 @@ def main(argv=None):
                                  help='A number that is multiplied to increase small budget. (default=2)')
     hyperparameters.add_argument('--minimum-time-budget', default=30, type=int, metavar='INT',
                                  help='Minimum time budget to perform symbolic execution (default=30)')
-    
-    hyperparameters.add_argument('--k-seeds', default=10, type=int, metavar='INT',
-                                 help='The number of seeds for search space to collect in terms of coverage (default=10)')
-    hyperparameters.add_argument('--exploration-round', default=20, type=int, metavar='INT',
+    hyperparameters.add_argument('--exploration-steps', default=20, type=int, metavar='INT',
                                  help='The number of symbolic execution runs that SymTuner focuses only on exploration (default=20)')
 
     # Others
@@ -71,14 +68,14 @@ def main(argv=None):
     parser.add_argument('--gcov-depth', default=1, type=int,
                         help='Depth to search for gcda and gcov files from gcov_obj to calculate code coverage (default=1)')
 
-    # Target
+    # Required arguments
     required = parser.add_argument_group('required arguments')
+    required.add_argument('-t', '--budget', default=None, type=int, metavar='INT',
+                          help='Total time budget in seconds')
     required.add_argument('llvm_bc', nargs='?', default=None,
                           help='LLVM bitecode file for klee')
     required.add_argument('gcov_obj', nargs='?', default=None,
                           help='Executable with gcov support')
-    required.add_argument('-t', '--budget', default=3600, type=int, metavar='INT',
-                          help='Total time budget in seconds (default=3600)')
     args = parser.parse_args(argv)
 
     if args.debug:
@@ -91,9 +88,9 @@ def main(argv=None):
             get_logger().info('Example space configuration json is generated: example-space.json')
         sys.exit(0)
 
-    if args.llvm_bc is None or args.gcov_obj is None:
+    if args.llvm_bc is None or args.gcov_obj is None or args.budget is None:
         parser.print_usage()
-        print('following parameters are required: llvm_bc, gcov_obj')
+        print('following parameters are required: -t, llvm_bc, gcov_obj')
         sys.exit(1)
 
     output_dir = Path(args.output_dir)
@@ -115,21 +112,21 @@ def main(argv=None):
     symbolic_executor = KLEE(args.klee)
 
     # Initialize SymTuner
-    symtuner = KLEESymTuner(args.klee_replay, args.gcov, args.k_seeds,
+    symtuner = KLEESymTuner(args.klee_replay, args.gcov, 10,
                             args.search_space, args.exploit_portion)
     evaluation_argument = {'folder_depth': args.gcov_depth}
 
     # Do until timeout
     get_logger().info('All configuration loaded. Start testing.')
     time_budget_handler = TimeBudgetHandler(args.budget, args.minimum_time_portion,
-                                            args.round, args.increase_ratio,
+                                            args.step, args.increase_ratio,
                                             args.minimum_time_budget)
     for i, time_budget in enumerate(time_budget_handler):
 
         iteration_dir = output_dir / f'iteration-{i}'
 
         # Sample parameters
-        policy = 'explore' if i < args.warmup_rounds else None
+        policy = 'explore' if i < args.exploration_steps else None
         parameters = symtuner.sample(policy=policy)
 
         # Run symbolic executor
