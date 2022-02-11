@@ -78,8 +78,8 @@ You can also find the bug table at `bugs.md`:
 |      ../../src/file-io.c 740 |        V        |       X       |
 ```
 
-### Commands for All Benchmarks
-Click to see commands for each benchmark:
+### Commands for running SymTuner on each benchmark.
+By clicking the benchmark name, You can see the exact commands for running SymTuner on each benchmark:
 
 <details>
 <summary>combine-0.4.0</summary>
