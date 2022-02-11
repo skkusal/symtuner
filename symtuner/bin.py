@@ -35,50 +35,50 @@ def main(argv=None):
     # Executable settings
     executable = parser.add_argument_group('executable settings')
     executable.add_argument('--klee', default='klee', type=str,
-                            help='path to "klee" executable (default=klee)')
+                            help='Path to "klee" executable (default=klee)')
     executable.add_argument('--klee-replay', default='klee-replay', type=str,
-                            help='path to "klee-replay" executable (default=klee-replay)')
+                            help='Path to "klee-replay" executable (default=klee-replay)')
     executable.add_argument('--gcov', default='gcov', type=str,
-                            help='path to "gcov" executable (default=gcov)')
+                            help='Path to "gcov" executable (default=gcov)')
 
     # Hyperparameters
     hyperparameters = parser.add_argument_group('hyperparameters')
-    hyperparameters.add_argument('-t', '--budget', default=3600, type=int, metavar='INT',
-                                 help='time budget in seconds (default=3600)')
-    hyperparameters.add_argument('--minimum-time-portion', default=0.005, type=float, metavar='FLOAT',
-                                 help='minimum portion for one iteration (default=0.005)')
-    hyperparameters.add_argument('--minimum-time-budget', default=30, type=int, metavar='INT',
-                                 help='strict minimum time budget for testing (default=30)')
-    hyperparameters.add_argument('--round', default=20, type=int, metavar='INT',
-                                 help='steps before increasing time budget (default=20)')
-    hyperparameters.add_argument('--increase-ratio', default=2, type=float, metavar='FLOAT',
-                                 help='multiplier for next time budget (default=2)')
     hyperparameters.add_argument('-s', '--search-space', default=None, type=str, metavar='JSON',
-                                 help='json file defining parameter search space')
+                                 help='Json file defining parameter search space')
     hyperparameters.add_argument('--exploit-portion', default=0.7, type=float, metavar='FLOAT',
-                                 help='portion of exploitation in SymTuner (default=0.7)')
+                                 help='Portion of exploitation in SymTuner (default=0.7)')
+    hyperparameters.add_argument('--step', default=20, type=int, metavar='INT',
+                                 help='The number of symbolic execution runs before increasing small budget (default=20)')
+    hyperparameters.add_argument('--minimum-time-portion', default=0.005, type=float, metavar='FLOAT',
+                                 help='Minimum portion for one iteration (default=0.005)')
+    hyperparameters.add_argument('--increase-ratio', default=2, type=float, metavar='FLOAT',
+                                 help='A number that is multiplied to increase small budget. (default=2)')
+    hyperparameters.add_argument('--minimum-time-budget', default=30, type=int, metavar='INT',
+                                 help='Minimum time budget to perform symbolic execution (default=30)')
+    
     hyperparameters.add_argument('--k-seeds', default=10, type=int, metavar='INT',
-                                 help='number of seeds for search spece to collect in terms of coverage (default=10)')
-    hyperparameters.add_argument('--warmup-rounds', default=20, type=int, metavar='INT',
-                                 help='exploring rounds in start (default=20)')
+                                 help='The number of seeds for search space to collect in terms of coverage (default=10)')
+    hyperparameters.add_argument('--exploration-round', default=20, type=int, metavar='INT',
+                                 help='The number of symbolic execution runs that SymTuner focuses only on exploration (default=20)')
 
     # Others
     parser.add_argument('-d', '--output-dir', default='symtuner-out', type=str,
-                        help='directory for generated files (default=symtuner-out)')
+                        help='Directory to store the generated files (default=symtuner-out)')
     parser.add_argument('--generate-search-space-json', action='store_true',
-                        help='make example json file defining parameter search space')
+                        help='Generate the json file defining parameter spaces used in our ICSE\'22 paper')
     parser.add_argument('--debug', action='store_true',
-                        help='log debug messages')
+                        help='Log the debug messages')
     parser.add_argument('--gcov-depth', default=1, type=int,
-                        help='depth to search for gcda and gcov files from gcov_obj (default=1)')
+                        help='Depth to search for gcda and gcov files from gcov_obj to calculate code coverage (default=1)')
 
     # Target
     required = parser.add_argument_group('required arguments')
     required.add_argument('llvm_bc', nargs='?', default=None,
                           help='LLVM bitecode file for klee')
     required.add_argument('gcov_obj', nargs='?', default=None,
-                          help='executable with gcov support')
-
+                          help='Executable with gcov support')
+    required.add_argument('-t', '--budget', default=3600, type=int, metavar='INT',
+                          help='Total time budget in seconds (default=3600)')
     args = parser.parse_args(argv)
 
     if args.debug:
