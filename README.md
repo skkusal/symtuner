@@ -276,10 +276,10 @@ usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
                 [llvm_bc] [gcov_obj]
 ...
 ```
-You can also see the meaning of each option of SymTuner as:
+You can also see the meaning of each option of SymTuner as the following command:
 ```
 $ symtuner --help
-...
+
 optional arguments:
   -h, --help            show this help message and exit
   --output-dir OUTPUT_DIR
