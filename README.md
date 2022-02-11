@@ -276,6 +276,18 @@ usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
                 [llvm_bc] [gcov_obj]
 ...
 ```
+You can also see the meaning of each option of SymTuner as:
+```
+$ symtuner --help
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --output-dir OUTPUT_DIR
+                        directory for generated files (default=symtuner-out)
+  --generate-search-space-json
+                        make example json file defining parameter search space                        
+...
+```
 
 ### Two mandatory options
 **Two options** are mandatory to run SymTuner: **llvm_bc** and **gcov_obj**. 
