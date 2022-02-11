@@ -13,68 +13,6 @@ $ docker run --rm -it --ulimit='stack=-1:-1' skkusal/symtuner
 Since KLEE, the symbolic executor, needs a big stack size,
 we recommend you to set an unlimited stack size by `--ulimit='stack=-1:-1'`.
 
-## Usage
-You can check the options of SymTuner with the following command:
-```
-$ symtuner -h
-usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
-                [-t INT] [--minimum-time-portion FLOAT] [--round INT]
-                [--increase-ratio FLOAT] [-s JSON] [--exploit-portion FLOAT]
-                [--k-seeds INT] [--warmup-rounds INT]
-                [--output-dir OUTPUT_DIR] [--generate-search-space-json]
-                [--debug] [--gcov-depth GCOV_DEPTH]
-                [llvm_bc] [gcov_obj]
-...
-```
-
-### Two mandatory options
-**Two options** are mandatory to run SymTuner: **llvm_bc** and **gcov_obj**. 
-**llvm_bc** indicates a location of an LLVM bitcode file to run KLEE, and **gcov_obj** is a location of an executable file with Gcov instrumentation for coverage calculation.
-| Option | Description |
-|:------:|:------------|
-| `llvm_bc` | LLVM bitcode file |
-| `gcov_obj` | executable with Gcov support |
-
-<!--
-Besides, you may carefully pass the depth of parent directory to collect auxiliary files for Gcov.
-You can set the level as the depth to the root of the target object.
-| Option | Description |
-|:------:|:------------|
-| `--gcov-depth` | The parent depth to find gcov auxiliary files, such as `*.gcda` and `*.gcov` files |
--->
-
-### Hyperparameters
-Here are some important hyperparameters. You can check all hyperparameters by passing `--help` option to SymTuner.
-| Option | Description |
-|:------:|:------------|
-| `--budget` | Total time budget |
-| `--search-space` | Path to json file that defines parameter spaces |
-
-If you do not specify search space, SymTuner will use the parameter spaces predefined in our paper.
-You can give your own parameter space with `--search-space` option.
-`--generate-search-space-json` option will generate an example json that defines search spaces:
-```bash
-$ symtuner --generate-search-space-json
-# See example-space.json
-```
-
-In the json file, there are two entries;
-`space` for parameters to be tuned by SymTuner, and `defaults` for parameters to use directly without tuning.
-```
-{
-    "space": {
-        "-max-memory": [[500, 1000, 1500, 2000, 2500], 1],
-        "-sym-stdout": [["on", "off"], 1],
-        ...
-    },
-    "defaults": {
-        "-watchdog": null,
-        ...
-    }
-}
-```
-Each tuning space is defined by its candidate values, and the maximum number of times to be repeated.
-
 ## Artifact
 Here, we provide an example instruction which conducts a short experiment performing **KLEE+SymTuner** and **KLEE with default parameters**, respectively, on a benchmark program **gcal-4.1** once with a time budget of one hour. 
 Note that, conducting experiments on all benchmarks (Figure 3 in our paper) takes a total of 1,920 hours (12 benchmarks * 10 hours * 4 baselines * 4 iterations). 
@@ -323,6 +261,71 @@ $ python3 report.py xorriso_SymTuner xorriso_defaultKLEE --name xorriso-1.5.2
 
 </div>
 </details>
+
+
+## Usage
+You can check the options of SymTuner with the following command:
+```
+$ symtuner -h
+usage: symtuner [-h] [--klee KLEE] [--klee-replay KLEE_REPLAY] [--gcov GCOV]
+                [-t INT] [--minimum-time-portion FLOAT] [--round INT]
+                [--increase-ratio FLOAT] [-s JSON] [--exploit-portion FLOAT]
+                [--k-seeds INT] [--warmup-rounds INT]
+                [--output-dir OUTPUT_DIR] [--generate-search-space-json]
+                [--debug] [--gcov-depth GCOV_DEPTH]
+                [llvm_bc] [gcov_obj]
+...
+```
+
+### Two mandatory options
+**Two options** are mandatory to run SymTuner: **llvm_bc** and **gcov_obj**. 
+**llvm_bc** indicates a location of an LLVM bitcode file to run KLEE, and **gcov_obj** is a location of an executable file with Gcov instrumentation for coverage calculation.
+| Option | Description |
+|:------:|:------------|
+| `llvm_bc` | LLVM bitcode file |
+| `gcov_obj` | executable with Gcov support |
+
+<!--
+Besides, you may carefully pass the depth of parent directory to collect auxiliary files for Gcov.
+You can set the level as the depth to the root of the target object.
+| Option | Description |
+|:------:|:------------|
+| `--gcov-depth` | The parent depth to find gcov auxiliary files, such as `*.gcda` and `*.gcov` files |
+-->
+
+### Hyperparameters
+Here are some important hyperparameters. You can check all hyperparameters by passing `--help` option to SymTuner.
+| Option | Description |
+|:------:|:------------|
+| `--budget` | Total time budget |
+| `--search-space` | Path to json file that defines parameter spaces |
+
+If you do not specify search space, SymTuner will use the parameter spaces predefined in our paper.
+You can give your own parameter space with `--search-space` option.
+`--generate-search-space-json` option will generate an example json that defines search spaces:
+```bash
+$ symtuner --generate-search-space-json
+# See example-space.json
+```
+
+In the json file, there are two entries;
+`space` for parameters to be tuned by SymTuner, and `defaults` for parameters to use directly without tuning.
+```
+{
+    "space": {
+        "-max-memory": [[500, 1000, 1500, 2000, 2500], 1],
+        "-sym-stdout": [["on", "off"], 1],
+        ...
+    },
+    "defaults": {
+        "-watchdog": null,
+        ...
+    }
+}
+```
+Each tuning space is defined by its candidate values, and the maximum number of times to be repeated.
+
+
 
 ## Source Code Structure
 Here are breif descriptions of files. Some less-important files may omitted.
