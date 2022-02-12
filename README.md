@@ -283,10 +283,10 @@ optional arguments:
 ### Three mandatory options
 **Three options** are mandatory to run SymTuner: **llvm_bc**, **gcov_obj** and **time budget**. 
 **llvm_bc** indicates a location of an LLVM bitcode file to run KLEE, and **gcov_obj** is a location of an executable file with Gcov instrumentation for coverage calculation.
-The option **`-t'** or **`--budget'** denotes the total testing time budget. 
+The option **`-t`** or **`--budget`** denotes the total testing time budget. 
 | Option | Description |
 |:------:|:------------|
-| `-t' or `--budget' | Total time budget in seconds |
+| `-t` or `--budget` | Total time budget in seconds |
 | `llvm_bc` | LLVM bitcode file |
 | `gcov_obj` | executable with Gcov support |
 
@@ -299,7 +299,7 @@ You can set the level as the depth to the root of the target object.
 -->
 
 ### Hyperparameters
-The hyperparameter `--search-space' is very important in our tool. You can check all the hyperparameters by passing `--help` option to SymTuner.
+The hyperparameter `--search-space` is very important in our tool. You can check all the hyperparameters by passing `--help` option to SymTuner.
 | Option | Description |
 |:------:|:------------|
 | `--search-space` | Path to json file that defines parameter spaces |
