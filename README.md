@@ -332,7 +332,7 @@ Each tuning space is defined by its candidate values, and the maximum number of 
 
 
 ## Source Code Structure
-Here are breif descriptions of files. Some less-important files may omitted.
+Here are breif descriptions of files. Some less-important files may be omitted.
 ```
 .
 ├── benchmarks                  Some auxilary files for testing provided benchmarks
