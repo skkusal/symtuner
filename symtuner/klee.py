@@ -1,7 +1,7 @@
 '''KLEE specific components in SymTuner
 
-This module contains KLEE specific components for running KLEE and evaluate generated
-testcases by KLEE. This module includes executable wrappers (for KLEE, KLEE replay, and GCov)
+This module contains KLEE specific components for running KLEE and evaluates the generated
+testcases by KLEE. This module includes executable wrappers (for KLEE, KLEE-replay, and GCov)
 and SymTuner implementation for KLEE.
 '''
 
